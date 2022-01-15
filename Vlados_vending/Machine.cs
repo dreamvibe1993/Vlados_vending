@@ -79,14 +79,17 @@ namespace Vlados_vending
                 Console.WriteLine("No such index! Try again.");
                 AskChoice();
             }
+            else
+            {
+                userChoice = products[userChosePos];
+            }
 
-            userChoice = products[userChosePos];
         }
 
         private void AskMoney()
         {
             Console.WriteLine("Deposit money.");
-            int money = int.Parse(Console.ReadLine());
+            int money = Convert.ToInt32(Console.ReadLine());
 
             if (money < 1)
             {
@@ -102,7 +105,7 @@ namespace Vlados_vending
         private void ReaskMoney()
         {
             Console.WriteLine("Add money.");
-            int money = int.Parse(Console.ReadLine());
+            int money = Convert.ToInt32(Console.ReadLine());
 
             if (money < 1)
             {
@@ -117,6 +120,7 @@ namespace Vlados_vending
 
         private void CountChange(int change)
         {
+            Console.WriteLine($"CHANGE: {change}");
             List<int> coinsChange = new List<int> { };
             while (change > 0)
             {
@@ -124,7 +128,7 @@ namespace Vlados_vending
                     : change < Coins.Tenner && change > Coins.Fiver ? Coins.Fiver
                     : change < Coins.Fiver && change > Coins.TwoCents ? Coins.TwoCents
                     : change < Coins.TwoCents ? Coins.Cent
-                    : 0;
+                    : change < Coins.Cent ? 0 : Coins.Tenner;
                 change -= coinWorth;
                 coinsChange.Add(coinWorth);
                 Console.WriteLine($"Change is turned in by {coinWorth}");
